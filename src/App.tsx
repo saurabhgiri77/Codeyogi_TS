@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import LectureList from "./AppList/LectureList";
 import AssignmentList from "./AppList/AssignmentList";
 import QuizPage from "./QuizPage";
@@ -12,15 +12,17 @@ import { uniqueId } from "lodash";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  const [alerts, setAlert]: any = React.useState([]);
-  let alert: any;
+type alertType = { message: string; type: string; id: any };
+
+const App: FC = () => {
+  const [alerts, setAlert] = React.useState<alertType[]>([]);
+  let alert: alertType;
   const id = uniqueId();
 
   const removeAlert = () => {
-    setAlert((latestAlerts: any) => {
+    setAlert((latestAlerts) => {
       console.log("latest", latestAlerts);
-      return latestAlerts.filter((a: any) => a.id !== alert.id);
+      return latestAlerts.filter((a: { id: number }) => a.id !== alert.id);
     });
   };
 
@@ -56,6 +58,6 @@ function App() {
       </div>
     </AlertContext.Provider>
   );
-}
+};
 
 export default App;

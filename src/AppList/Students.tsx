@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import StudentsData from "../ShowList/StudentsData";
 import { getStudentsApi } from "../ShowList/Api";
 import Loader from "../ShowList/Loader";
+import { users } from "../type/type";
 
 function Students() {
-  //   const catchedData = JSON.parse(localStorage.getItem("Students")) || [];
+  // const catchedData = JSON.parse(localStorage.getItem("Students")) || [];
 
-  let [users, setUsers] = useState([]);
+  let [users, setUsers] = useState<users[]>([]);
   const [search, setSearch] = useState(true);
 
   useEffect(() => {

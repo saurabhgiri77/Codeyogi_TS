@@ -1,12 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import Assignments from "../ShowList/Assignments";
 import Loader from "../ShowList/Loader";
 import { getassignmentsApi } from "../ShowList/Api";
+import { assignment } from "../type/type";
 
-function AssignmentList() {
-  //   const catchedData = JSON.parse(localStorage.getItem("assignments")) || [];
+const AssignmentList: FC = () => {
+  // const catchedData = JSON.parse(localStorage.getItem("assignments")) || [];
 
-  let [users, setUsers] = React.useState([]);
+  let [users, setUsers] = React.useState<assignment[]>([]);
   const [search, setSearch] = React.useState(true);
 
   React.useEffect(() => {
@@ -27,12 +28,12 @@ function AssignmentList() {
         {search && <Loader />}
       </div>
       <div className="bg-gray-50 py-4 shadow-lg">
-        {users.map((t: any) => {
+        {users.map((t) => {
           return <Assignments key={t.id} props={t} />;
         })}
       </div>
     </div>
   );
-}
+};
 
 export default AssignmentList;

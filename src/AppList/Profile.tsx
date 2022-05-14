@@ -4,9 +4,10 @@ import FormInput from "../ShowList/FormInput";
 import { number, object, string } from "yup";
 import { getProfileApi } from "../ShowList/Api";
 import AlertContext from "../ShowList/AlertContext";
-// import { DateTime } from "luxon";
+import { DateTime } from "luxon";
 import Loader from "../ShowList/Loader";
 import Alerts from "./Alerts";
+// import { profileType } from "../type/type";
 
 function Profile() {
   const [profile, setProfile]: any = React.useState("");
@@ -34,9 +35,9 @@ function Profile() {
     passoutYear: number().required(),
   });
 
-  //   const dob = DateTime.fromISO(profile.date_of_birth).toLocaleString(
-  //     DateTime.DATE_SHORT
-  //   );
+  const dob = DateTime.fromISO(profile.date_of_birth).toLocaleString(
+    DateTime.DATE_SHORT
+  );
 
   const initialValues = {
     fname: profile.first_name,
@@ -45,7 +46,7 @@ function Profile() {
     institute: "Government polytechnic Dehradun",
     passoutYear: profile.year_of_pass_out,
     phone: profile.phone_no,
-    DOB: profile.date_of_birth,
+    DOB: dob,
     device: profile.work_device,
     roll_no: profile.institute_roll_no,
     branch: profile.branch,

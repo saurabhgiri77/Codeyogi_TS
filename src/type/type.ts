@@ -36,3 +36,15 @@ export type popup = {
   name: string;
   value: string;
 };
+
+export type profileType = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  year_of_pass_out: number;
+  phone_no: number;
+  dob: string;
+  work_device: string;
+  institute_roll_no: number;
+  branch: string;
+};

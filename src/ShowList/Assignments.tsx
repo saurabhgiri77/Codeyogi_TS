@@ -1,63 +1,67 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, FC } from "react";
 import { Link } from "react-router-dom";
-// import { DateTime } from "luxon";
+import { DateTime } from "luxon";
 import Popup from "./Popup";
 // import { useForm } from "./forms";
 import Alerts from "../AppList/Alerts";
 import AlertContext from "./AlertContext";
+import { assignment } from "../type/type";
+import { string } from "yup";
 
-function Assignments({ props }: any) {
+type prop = { props: assignment };
+
+const Assignments: FC<prop> = ({ props }) => {
   const [popup, setPopup] = React.useState(false);
+  const [submissionLink, setSubmissionLink] = React.useState("");
   const [validUrl, setValidUrl] = React.useState(true);
   const [urlError, setUrlError] = React.useState("");
 
   const alert: any = useContext(AlertContext);
 
-  // const onSubmit = () => {
-  //   if (formData === "") {
-  //     return;
-  //   } else {
-  //     try {
-  //       urlValidator.validateSync(formData.popup);
-  //       setValidUrl(true);
-  //       setPopup(false);
-  //       console.log("Calling api with", formData.popup);
-  //       alert.showAlert("submitted successfully");
-  //       axios.put(
-  //         `https://api.codeyogi.io/assignment/${props.id}/submit`,
-  //         { formData },
-  //         { withCredentials: true }
-  //       );
-  //     } catch (e: any) {
-  //       setUrlError(e.message);
-  //       setValidUrl(false);
-  //       console.log(e.message);
-  //       alert.showAlert(e.message, "error", 5);
-  //       return;
-  //     }
-  //   }
-  // };
+  const submit = (event: any) => {
+    event.preventDefault();
+    if (submissionLink === "") {
+      return;
+    } else {
+      const urlValidator = string().url("URL is not valid");
+      try {
+        urlValidator.validateSync(submissionLink);
+        setValidUrl(true);
+        setSubmissionLink("");
+        setPopup(false);
+        console.log("Calling api with", submissionLink);
+        axios.put(
+          `https://api.codeyogi.io/assignment/${props.id}/submi`,
+          { submissionLink },
+          { withCredentials: true }
+        );
+      } catch (e: any) {
+        setUrlError(e.message);
+        setValidUrl(false);
+        alert.showAlert(e.message, "error", 5);
+        return;
+      }
+    }
+  };
 
-  // const { formData, inputsChange, submit, urlValidator } = useForm(
-  //   {
-  //     popup: "",
-  //   },
-  //   onSubmit
-  // );
+  const onInputChange = (event: any) => {
+    setSubmissionLink(event.target.value);
+  };
 
   const popupClose = () => {
     setPopup(false);
     setValidUrl(true);
+    setSubmissionLink("");
   };
 
-  //   const submitDate = DateTime.fromISO(props.updated_at).toLocaleString(
-  //     DateTime.DATE_MED
-  //   );
+  const submitDate = DateTime.fromISO(props.updated_at).toLocaleString(
+    DateTime.DATE_MED
+  );
 
-  //   const dueDate = DateTime.fromISO(props.due_date).toLocaleString(
-  //     DateTime.DATE_FULL
-  //   );
+  const dueDate = DateTime.fromISO(props.due_date).toLocaleString(
+    DateTime.DATE_FULL
+  );
 
   return (
     <div
@@ -72,10 +76,10 @@ function Assignments({ props }: any) {
         <div className="flex space-x-2 font-semibold">
           <h1>#{props.id}</h1>
           <h1>{props.title}</h1>
-          <h1 className="text-gray-500">({})</h1>
+          <h1 className="text-gray-500">({submitDate})</h1>
         </div>
         <div className="flex justify-between">
-          <h1 className="text-red-500 text-base">Due Date: {}</h1>
+          <h1 className="text-red-500 text-base">Due Date: {dueDate}</h1>
           <h1 className="text-green-600 text-lg font-semibold">Submitted</h1>
         </div>
       </Link>
@@ -101,7 +105,7 @@ function Assignments({ props }: any) {
         </button>
         <div className="h-12 bg-gray-300 px1"></div>
         <a
-          href={props.submissions[0].submission_link}
+          // href={props.submissions[0].submission_link}
           target="_blank"
           className="text-indigo-500 hover:text-blue-800 flex items-center"
         >
@@ -123,10 +127,10 @@ function Assignments({ props }: any) {
       {popup && (
         <Popup
           id={props.id}
-          // onSubmit={submit}
+          onSubmit={submit}
           name="popup"
-          // value={formData.popup}
-          // onChange={inputsChange}
+          value={submissionLink}
+          onChange={onInputChange}
           popupClose={popupClose}
           validUrl={!validUrl}
           error={urlError}
@@ -134,6 +138,6 @@ function Assignments({ props }: any) {
       )}
     </div>
   );
-}
+};
 
 export default Assignments;

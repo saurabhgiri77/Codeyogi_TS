@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import axios from "axios";
-// import { DateTime } from "luxon";
+import { DateTime } from "luxon";
 import MDEditor from "@uiw/react-md-editor";
 import Popup from "./Popup";
 // import { useForm } from "./form";
@@ -51,9 +51,9 @@ function DeatailsCard({ props }: any) {
     setValidUrl(true);
   };
 
-  // const dueDate = DateTime.fromISO(props.due_date).toLocaleString(
-  //   DateTime.DATE_FULL
-  // );
+  const dueDate = DateTime.fromISO(props.due_date).toLocaleString(
+    DateTime.DATE_FULL
+  );
 
   return (
     <div>
@@ -72,7 +72,7 @@ function DeatailsCard({ props }: any) {
             </div>
             <div className="flex justify-between border-b-2 py-4 ">
               <h1>Due date</h1>
-              <h1>{}</h1>
+              <h1>{dueDate}</h1>
             </div>
             <div className="flex justify-between space-x-52 border-b-2 py-4">
               <h1>Description</h1>
