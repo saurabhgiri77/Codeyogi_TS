@@ -4,13 +4,13 @@ import axios from "axios";
 import DeatailsCard from "../ShowList/DetailsCard";
 
 function Details() {
-  const data = useParams();
-  console.log("id is", data);
+  const { id } = useParams();
+  console.log("id is", id);
 
   let [detail, setDetail] = React.useState([]);
 
   React.useEffect(() => {
-    const token = axios.get(`https://api.codeyogi.io/assignments/${data.id}`, {
+    const token = axios.get(`https://api.codeyogi.io/assignments/${id}`, {
       withCredentials: true,
     });
     token.then((response) => {

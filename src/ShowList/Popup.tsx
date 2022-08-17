@@ -1,6 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
+import { popup } from "../type/type";
 
-function Popup(props: any) {
+type prop = { props: popup };
+
+const Popup = (props: any) => {
   return (
     <form
       onSubmit={props.onSubmit}
@@ -42,6 +45,6 @@ function Popup(props: any) {
       </div>
     </form>
   );
-}
+};
 
 export default Popup;

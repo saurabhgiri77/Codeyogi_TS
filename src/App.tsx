@@ -13,6 +13,7 @@ import { uniqueId } from "lodash";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 type alertType = { message: string; type: string; id: any };
+type showAlertType = { message: string; type: string; timeout: number };
 
 const App: FC = () => {
   const [alerts, setAlert] = React.useState<alertType[]>([]);
@@ -26,7 +27,11 @@ const App: FC = () => {
     });
   };
 
-  const showAlert = ({ message, type = "success", timeout = 3 }: any) => {
+  const showAlert = ({
+    message,
+    type = "success",
+    timeout = 3,
+  }: showAlertType) => {
     alert = { message, type, id };
     setAlert([...alerts, alert]);
 

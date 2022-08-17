@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, FC } from "react";
+import React, { useContext, FC, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import Popup from "./Popup";
@@ -32,7 +32,7 @@ const Assignments: FC<prop> = ({ props }) => {
         setPopup(false);
         console.log("Calling api with", submissionLink);
         axios.put(
-          `https://api.codeyogi.io/assignment/${props.id}/submi`,
+          `https://api.codeyogi.io/assignment/${props.id}/submit`,
           { submissionLink },
           { withCredentials: true }
         );
@@ -45,7 +45,7 @@ const Assignments: FC<prop> = ({ props }) => {
     }
   };
 
-  const onInputChange = (event: any) => {
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSubmissionLink(event.target.value);
   };
 
